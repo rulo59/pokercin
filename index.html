@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Reparto y Estructura - Torneo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <section id="inventory">
+      <h2>💰 Cálculo del valor total</h2>
+      <p class="note">Inventario actual de fichas y su valor total (se muestra primero).</p>
+      <div class="chips-row" id="chipsRow">
+      </div>
+      <div class="chips-totals">
+        <strong>Total fichas:</strong> <span id="totalChips">-</span>
+        &nbsp;&nbsp; <strong>Total puntos:</strong> <span id="totalPoints">-</span>
+      </div>
+    </section>
+    <section id="stacks">
+      <h2>Reparto por número de jugadores</h2>
+      <p class="note">Los valores son aproximados y redondeados a números prácticos por jugador. (Comprobado con inventario.)</p>
+
+      <div class="table-wrap">
+        <table id="stacksTable" class="table">
+          <thead>
+            <tr>
+              <th>Jugadores</th>
+              <th>Blancas</th>
+              <th>Rojas</th>
+              <th>Verdes</th>
+              <th>Azules</th>
+              <th>Negras</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="structure">
+      <h2>Torneo estándar (~2 horas)</h2>
+      <p>Cada nivel dura unos <strong>20 minutos</strong>. Descanso opcional tras el nivel 5.</p>
+
+      <table id="levelsTable" class="table">
+        <thead>
+          <tr><th>Nivel</th><th>Ciegas</th><th>Apuesta mínima</th><th>Comentario</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
