@@ -3,55 +3,250 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Reparto y Estructura - Torneo</title>
+  <title>Pokercin 🂡 — Estudio de Poker</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="container">
-    <section id="inventory">
-      <h2>💰 Cálculo del valor total</h2>
-      <p class="note">Inventario actual de fichas y su valor total (se muestra primero).</p>
-      <div class="chips-row" id="chipsRow">
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo">🂡 Pokercin</div>
+      <nav class="main-nav" id="mainNav">
+        <button class="nav-btn active" data-tab="rangos">📊 Rangos</button>
+        <button class="nav-btn" data-tab="posicion">🎯 Posición</button>
+        <button class="nav-btn" data-tab="situaciones">🃏 Situaciones</button>
+        <button class="nav-btn" data-tab="equity">⚖️ Equity</button>
+        <button class="nav-btn" data-tab="quiz">🧠 Quiz</button>
+        <button class="nav-btn" data-tab="torneo">🏆 Torneo</button>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menú">☰</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <!-- ===== TAB: RANGOS ===== -->
+    <section id="tab-rangos" class="tab-content active">
+      <div class="section-hero">
+        <h2>📊 Rangos de Apertura</h2>
+        <p class="lead">Selecciona una posición para ver el rango de apertura recomendado. Haz clic en manos para profundizar.</p>
       </div>
-      <div class="chips-totals">
-        <strong>Total fichas:</strong> <span id="totalChips">-</span>
-        &nbsp;&nbsp; <strong>Total puntos:</strong> <span id="totalPoints">-</span>
+      <div class="position-selector" id="positionSelector">
+        <button class="pos-btn active" data-pos="UTG">UTG</button>
+        <button class="pos-btn" data-pos="MP">MP</button>
+        <button class="pos-btn" data-pos="HJ">HJ</button>
+        <button class="pos-btn" data-pos="CO">CO</button>
+        <button class="pos-btn" data-pos="BTN">BTN</button>
+        <button class="pos-btn" data-pos="SB">SB</button>
+        <button class="pos-btn" data-pos="BB">BB (vs steal)</button>
+      </div>
+      <div class="range-info" id="rangeInfo"></div>
+      <div class="hand-grid-container">
+        <div class="hand-grid" id="handGrid"></div>
+      </div>
+      <div class="range-legend">
+        <span class="legend-item"><span class="legend-dot open"></span> Apertura RFI</span>
+        <span class="legend-item"><span class="legend-dot call3b"></span> Call 3-bet</span>
+        <span class="legend-item"><span class="legend-dot fold"></span> Fold</span>
       </div>
     </section>
-    <section id="stacks">
-      <h2>Reparto por número de jugadores</h2>
-      <p class="note">Los valores son aproximados y redondeados a números prácticos por jugador. (Comprobado con inventario.)</p>
 
-      <div class="table-wrap">
-        <table id="stacksTable" class="table">
-          <thead>
-            <tr>
-              <th>Jugadores</th>
-              <th>Blancas</th>
-              <th>Rojas</th>
-              <th>Verdes</th>
-              <th>Azules</th>
-              <th>Negras</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+    <!-- ===== TAB: POSICION ===== -->
+    <section id="tab-posicion" class="tab-content">
+      <div class="section-hero">
+        <h2>🎯 Concepto de Posición</h2>
+        <p class="lead">La posición es el factor individual más importante en el poker. Actuar último da información masiva.</p>
+      </div>
+      <div class="table-visual-wrap">
+        <div class="poker-table" id="pokerTable">
+          <div class="table-felt">
+            <span class="table-label">Mesa 6-max</span>
+          </div>
+          <div class="seat-wrap" id="seatWrap"></div>
+        </div>
+        <div class="position-detail" id="positionDetail">
+          <p class="hint">Haz clic en una posición para ver detalles</p>
+        </div>
+      </div>
+
+      <div class="concept-cards">
+        <div class="concept-card">
+          <h3>🎪 In Position (IP)</h3>
+          <p>Actúas <strong>después</strong> de tu oponente en todas las calles postflop. Ves sus acciones antes de decidir. Ventaja enorme.</p>
+          <ul>
+            <li>Puedes tomar pot control o value thin</li>
+            <li>El bluff es más creíble</li>
+            <li>Puedes "flotar" con draws de forma rentable</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h3>😰 Out of Position (OOP)</h3>
+          <p>Actúas <strong>antes</strong> que tu oponente. Estás "ciego" sobre su intención.</p>
+          <ul>
+            <li>Requiere manos más fuertes para ser rentable</li>
+            <li>El c-bet OOP requiere más cautela</li>
+            <li>Rango defensivo más ajustado</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h3>🚀 Iniciativa en la mano</h3>
+          <p>El <strong>agresor</strong> de la calle anterior lleva la iniciativa. Puede c-bet con credibilidad.</p>
+          <ul>
+            <li>PFR (preflop raiser) tiene iniciativa en flop</li>
+            <li>Caller puede "tomar" iniciativa con donk-bet</li>
+            <li>Doble barril = mantener iniciativa</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h3>💡 Rangos relativos</h3>
+          <p>BTN abre el 45-50% de manos. UTG solo el 12-15%. La posición justifica ampliar el rango.</p>
+          <ul>
+            <li>UTG: muy ajustado, muchos jugadores atrás</li>
+            <li>BTN: máxima libertad, solo 2 OOP</li>
+            <li>SB: última en PF, primera postflop</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section id="structure">
-      <h2>Torneo estándar (~2 horas)</h2>
-      <p>Cada nivel dura unos <strong>20 minutos</strong>. Descanso opcional tras el nivel 5.</p>
-
-      <table id="levelsTable" class="table">
-        <thead>
-          <tr><th>Nivel</th><th>Ciegas</th><th>Apuesta mínima</th><th>Comentario</th></tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+    <!-- ===== TAB: SITUACIONES ===== -->
+    <section id="tab-situaciones" class="tab-content">
+      <div class="section-hero">
+        <h2>🃏 Situaciones Interactivas</h2>
+        <p class="lead">Practica decisiones reales. Se te presenta una mano, debes elegir la acción correcta.</p>
+      </div>
+      <div class="situation-container" id="situationContainer">
+        <div class="situation-card" id="situationCard">
+          <div class="situation-header">
+            <span class="situation-type" id="sitType">2-BET</span>
+            <span class="situation-pos" id="sitPos">BTN vs CO</span>
+          </div>
+          <div class="board-area">
+            <div class="hole-cards" id="holeCards"></div>
+            <div class="board-cards" id="boardCards"></div>
+          </div>
+          <div class="situation-context" id="sitContext"></div>
+          <div class="action-buttons" id="actionBtns"></div>
+          <div class="situation-feedback" id="sitFeedback"></div>
+          <div class="situation-nav">
+            <button class="btn-secondary" id="skipSit">Saltar →</button>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- ===== TAB: EQUITY ===== -->
+    <section id="tab-equity" class="tab-content">
+      <div class="section-hero">
+        <h2>⚖️ Equity y Probabilidades</h2>
+        <p class="lead">Entiende la equity aproximada de situaciones comunes.</p>
+      </div>
+
+      <div class="equity-quiz-area" id="equityQuizArea">
+        <div class="eq-matchup" id="eqMatchup">
+          <div class="eq-hand" id="eqHand1"></div>
+          <div class="eq-vs">vs</div>
+          <div class="eq-hand" id="eqHand2"></div>
+        </div>
+        <p class="eq-question">¿Cuál es la equity aproximada de la mano de la izquierda?</p>
+        <div class="eq-options" id="eqOptions"></div>
+        <div class="eq-feedback" id="eqFeedback"></div>
+        <button class="btn-primary" id="nextEquity" style="margin-top:16px">Siguiente →</button>
+      </div>
+
+      <div class="equity-reference">
+        <h3>📖 Referencia rápida</h3>
+        <div class="eq-ref-grid" id="eqRefGrid"></div>
+      </div>
+
+      <div class="odds-calculator">
+        <h3>🧮 Pot Odds</h3>
+        <p class="lead">Calcula si tienes odds correctas para hacer call.</p>
+        <div class="odds-inputs">
+          <div class="odds-field">
+            <label>Tamaño del bote (antes de la apuesta)</label>
+            <input type="number" id="potSize" placeholder="100" min="1">
+          </div>
+          <div class="odds-field">
+            <label>Apuesta rival</label>
+            <input type="number" id="betSize" placeholder="50" min="1">
+          </div>
+          <div class="odds-field">
+            <label>Tus outs (opcional)</label>
+            <input type="number" id="yourOuts" placeholder="8" min="0" max="21">
+          </div>
+        </div>
+        <button class="btn-primary" id="calcOdds">Calcular</button>
+        <div class="odds-result" id="oddsResult"></div>
+      </div>
+    </section>
+
+    <!-- ===== TAB: QUIZ ===== -->
+    <section id="tab-quiz" class="tab-content">
+      <div class="section-hero">
+        <h2>🧠 Quiz de Conceptos</h2>
+        <p class="lead">Pon a prueba tu conocimiento de conceptos clave.</p>
+      </div>
+      <div class="quiz-progress" id="quizProgress">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <span id="progressText">0 / 0</span>
+      </div>
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+        <div class="quiz-actions">
+          <button class="btn-secondary" id="nextQuestion" style="display:none">Siguiente →</button>
+          <button class="btn-primary" id="restartQuiz" style="display:none">Reiniciar quiz</button>
+        </div>
+      </div>
+      <div class="quiz-score" id="quizScore" style="display:none">
+        <h3>Resultado: <span id="scoreText"></span></h3>
+        <p id="scoreMessage"></p>
+      </div>
+    </section>
+
+    <!-- ===== TAB: TORNEO ===== -->
+    <section id="tab-torneo" class="tab-content">
+      <div class="section-hero">
+        <h2>🏆 Calculadora de Torneo</h2>
+        <p class="lead">Reparto de fichas y estructura de ciegas para torneos caseros.</p>
+      </div>
+      <div class="container-torneo">
+        <section id="inventory">
+          <h3>💰 Inventario de fichas</h3>
+          <div class="chips-row" id="chipsRow"></div>
+          <div class="chips-totals">
+            <strong>Total fichas:</strong> <span id="totalChips">-</span>
+            &nbsp;&nbsp; <strong>Total puntos:</strong> <span id="totalPoints">-</span>
+          </div>
+        </section>
+        <section id="stacks">
+          <h3>Reparto por número de jugadores</h3>
+          <div class="table-wrap">
+            <table id="stacksTable" class="table">
+              <thead>
+                <tr><th>Jugadores</th><th>Blancas</th><th>Rojas</th><th>Verdes</th><th>Azules</th><th>Negras</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+        <section id="structure">
+          <h3>Estructura de ciegas (~2 horas)</h3>
+          <table id="levelsTable" class="table">
+            <thead>
+              <tr><th>Nivel</th><th>Ciegas</th><th>Mín bet</th><th>Nota</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+        <div class="torneo-actions">
+          <button id="copyBtn" class="btn-primary">📋 Copiar todo</button>
+          <button id="printBtn" class="btn-secondary">🖨️ Imprimir</button>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <script src="script.js"></script>
